@@ -18,7 +18,7 @@ import { useUrlPosition } from "../hooks/useUrlPosition";
 
 function Map() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
-  const { mapLat, mapLng } = useUrlPosition();
+  const { lat, lng } = useUrlPosition();
   const { cities } = useCities();
   const {
     isLoading: isLoadingGeolocation,
@@ -28,11 +28,11 @@ function Map() {
 
   useEffect(
     function () {
-      if (mapLat && mapLng) {
-        setMapPosition([mapLat, mapLng]);
+      if (lat && lng) {
+        setMapPosition([lat, lng]);
       }
     },
-    [mapLat, mapLng]
+    [lat, lng]
   );
 
   useEffect(
