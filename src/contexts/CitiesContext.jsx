@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useReducer,
@@ -78,8 +79,12 @@ function CitiesProvider({ children }) {
     }
   }, []);
 
-  async function getCity(id) {
+  const getCity = useCallback(async function getCity(id) {
     try {
+      if (currentCity.id === id) {
+        return;
+      }
+      
       dispatch({ type: "loading" });
       const res = await fetch(`${BASE_URL}/cities/${id}`);
       const data = await res.json();
@@ -90,7 +95,7 @@ function CitiesProvider({ children }) {
         payload: "Error occurred while loading city!",
       });
     }
-  }
+  }, [currentCity.id]);
 
   async function createCity(newCity) {
     try {
